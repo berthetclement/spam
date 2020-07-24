@@ -49,6 +49,28 @@ glm_logit <- function(data_df, y_name, x_name, ...) {
 }
 
 
+#' @export
+#' @title glm model summary
+#' @description Quelques infos sur le modele.
+#' La convergence du modele, le R2 de Mc Fadden et la distribution $p_{xi}$ \code{...}
+#' @param modele Object type glm.
+#' @param train_response La variable reponse du train (spam de type facteur).
+#' @return List of 3 elements : boolean, num et data frame.
+
+analyse_modele <- function(modele, train_response){
+        converge <- modele$converged
+        R2.mf = 1-(modele$deviance/modele$null.deviance)
+        df <- data.frame(
+                modele$fitted.values, train_response
+        )
+        names(df) <- c("pi", "spam")
+
+        l <- list(conv = converge,
+                  r2 = R2.mf,
+                  df_pi = df)
+        l
+
+}
 
 
 

@@ -132,3 +132,36 @@ gg_bar_group <- function(tidy_df,
     )
 }
 
+
+
+# plot des pi ----
+
+#' @export
+#' @title Distribution des  \code{$p_{xi}$}
+#' @description A utiliser apres la fonction [analyse_modele()].
+#' @param df Put data frame.
+#' @param pi Name of object corresponding at estimate values of your data frame.
+#' @param fill_var Name of object corresponding at your response variable of your data frame.
+#' @param labs_capt  Character label.
+#' @param labs_title Character label.
+#' @return ggplot/geom_histogram/theme_minimal/theme/labs.
+
+gg_pi <- function(df, pi, fill_var,labs_capt, labs_title){
+  ggplot(df) +
+    geom_histogram(aes(x=!!pi, fill=!!fill_var),
+                   position=position_dodge(width = 0.5)) +
+    theme_minimal() +
+    theme(
+      plot.title = element_text(face = "bold", hjust = 0.5, size=12),
+      legend.title=element_blank(), #element_text(face = "bold", hjust = 0.5, size=8),
+      legend.text=element_text(size=8,vjust =1,  hjust = 1),
+      axis.text.x = element_text(vjust=1, angle=0, hjust = 1, size = 8, colour = "gray40"),
+      axis.title.x=element_text(size=8),
+      axis.title.y=element_text(size=8)
+    )+
+    labs(x =  "score", y = element_blank(),
+         caption = labs_capt ,
+         title = labs_title
+    )
+}
+
