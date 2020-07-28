@@ -1,5 +1,5 @@
 
-# construire un train/test a partir d'une data frame ----
+# construire un train/test a partir d'un data frame ----
 
 #' @export
 #' @title Make data set train/test.
@@ -55,6 +55,7 @@ glm_logit <- function(data_df, y_name, x_name, ...) {
 #' La convergence du modele, le R2 de Mc Fadden et la distribution $p_{xi}$ \code{...}
 #' @param modele Object type glm.
 #' @param train_response La variable reponse du train (spam de type facteur).
+#' @family Analyse modele glm_logit.
 #' @return List of 3 elements : boolean, num et data frame.
 
 analyse_modele <- function(modele, train_response){
@@ -74,4 +75,52 @@ analyse_modele <- function(modele, train_response){
 
 
 
+#' @export
+#' @title Matrice de confusion.
+#' @description Sensibilite, specificite \code{...}
+#' @param var_response Vecteur de la variable reponse sur le test (type factor pour [table()]).
+#' @param var_estime Vecteur des Y estimés sur test.
+#' @param nb_individus Longueur du data frame test (nombre reel).
+#' @family Analyse modele glm_logit.
+#' @return Data frame.
+
+conf_mat <- function(var_response, var_estime, nb_individus){
+        reco <- ifelse(var_estime >.5, "spam","mail")
+
+        confusion.mat = table(var_response, reco)
+
+        fauxneg = confusion.mat[2,1]
+        fauxpos = confusion.mat[1,2]
+        vraisneg = confusion.mat[1,1]
+        vraispos = confusion.mat[2,2]
+        txerr = (fauxneg+fauxpos) / nb_individus
+        sensibilite <- vraispos / (vraispos + fauxneg)
+        precision <- vraispos / (vraispos + fauxpos)
+        specificite <- vraisneg / (vraisneg + fauxpos)
+
+        df <- data.frame(fauxneg,
+                         fauxpos ,
+                         vraisneg ,
+                         vraispos ,
+                         txerr ,
+                         sensibilite ,
+                         precision ,
+                         specificite
+        )
+        df
+}
+
+
+
+#' @export
+#' @title Donnees de la matrice de confusion [flextable()].
+#' @description Pour affichage des valeurs dans un tableau.
+#' @param df_conf_mat Data frame.
+#' @family Analyse modele glm_logit.
+#' @importFrom flextable flextable
+#' @return Un tableau en image (viewer) et un objet de type list().
+
+ft_conf_tab <- function(df_conf_mat){
+        flextable(round(df_conf_mat,3))
+}
 

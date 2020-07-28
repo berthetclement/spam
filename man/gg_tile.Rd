@@ -40,3 +40,9 @@ Visualiser rapidement des concentrations (scale).
 
 Data input is "tidy" data frame.
 }
+\seealso{
+Other graph stat des: 
+\code{\link{gg_bar_group}()},
+\code{\link{gg_bar}()}
+}
+\concept{graph stat des}

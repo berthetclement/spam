@@ -23,3 +23,8 @@ ggplot/geom_histogram/theme_minimal/theme/labs.
 \description{
 A utiliser apres la fonction \code{\link[=analyse_modele]{analyse_modele()}}.
 }
+\seealso{
+Other graphiques modele glm_logit: 
+\code{\link{gg_roc}()}
+}
+\concept{graphiques modele glm_logit}

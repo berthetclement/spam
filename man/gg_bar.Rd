@@ -23,3 +23,9 @@ Barplot volume + poucentage.
 
 Data input is data frame.
 }
+\seealso{
+Other graph stat des: 
+\code{\link{gg_bar_group}()},
+\code{\link{gg_tile}()}
+}
+\concept{graph stat des}

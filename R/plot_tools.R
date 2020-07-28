@@ -16,6 +16,7 @@ globalVariables(c("count", "prop"))
 #' @param labs_capt  Character label.
 #' @param labs_title Character label.
 #' @return ggplot/geom_tile/theme_minimal/them/labs.
+#' @family graph stat des
 
 # graph tile ----
 gg_tile <- function(tidy_df,
@@ -56,6 +57,7 @@ gg_tile <- function(tidy_df,
 #' @param labs_capt  Character label.
 #' @param labs_title Character label.
 #' @return ggplot/geom_bar/theme_minimal/theme/labs.
+#' @family graph stat des
 
 gg_bar <- function(df, y_plot, labs_capt, labs_title){
   ggplot(df)+
@@ -101,6 +103,7 @@ gg_bar <- function(df, y_plot, labs_capt, labs_title){
 #' @param labs_capt  Character label.
 #' @param labs_title Character label.
 #' @return ggplot/geom_bar/theme_minimal/theme/labs.
+#' @family graph stat des
 
 gg_bar_group <- function(tidy_df,
                          x_plot, y_plot, fill_plot, # noms objets ds le df_tidy
@@ -144,6 +147,7 @@ gg_bar_group <- function(tidy_df,
 #' @param fill_var Name of object corresponding at your response variable of your data frame.
 #' @param labs_capt  Character label.
 #' @param labs_title Character label.
+#' @family graphiques modele glm_logit
 #' @return ggplot/geom_histogram/theme_minimal/theme/labs.
 
 gg_pi <- function(df, pi, fill_var,labs_capt, labs_title){
@@ -165,3 +169,35 @@ gg_pi <- function(df, pi, fill_var,labs_capt, labs_title){
     )
 }
 
+
+#' @export
+#' @title Courbe ROC GLM
+#' @description Permet de visualiser la qualité du pouvoir predictif du modele.
+#' @param roc Put roc object [roc()].
+#' @param labs_capt  Character label.
+#' @param labs_title Character label.
+#' @importFrom pROC ggroc
+#' @family graphiques modele glm_logit
+#' @return ggplot/ggroc/theme_minimal/theme/labs.
+
+
+# courbe roc ----
+gg_roc <- function(roc, labs_capt, labs_title){
+  ggroc(roc,
+        alpha = 0.5, colour = "red", size = 2,
+        legacy.axes = TRUE)+
+    theme_minimal() +
+    theme(
+      plot.title = element_text(face = "bold", hjust = 0.5, size=12),
+      plot.caption = element_text(face = "bold", size=8),
+      legend.title=element_blank(),
+      legend.text=element_text(size=8,vjust =1,  hjust = 1),
+      axis.text.x = element_text(vjust=1, angle=0, hjust = 1, size = 8, colour = "gray40"),
+      axis.title.x=element_text(face = "bold",size=10),
+      axis.title.y=element_text(face = "bold",size=10)
+    )+
+    labs(x =  "Sprecificite", y = "Sensibilite",
+         caption = labs_capt ,
+         title = labs_title
+    )
+}

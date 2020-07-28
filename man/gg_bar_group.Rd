@@ -27,3 +27,9 @@ Barplot, numbers of capital letters (average, longest, total).
 
 Data (tidy format) input is data frame.
 }
+\seealso{
+Other graph stat des: 
+\code{\link{gg_bar}()},
+\code{\link{gg_tile}()}
+}
+\concept{graph stat des}

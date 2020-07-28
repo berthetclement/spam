@@ -18,3 +18,9 @@ List of 3 elements : boolean, num et data frame.
 Quelques infos sur le modele.
 La convergence du modele, le R2 de Mc Fadden et la distribution $p_{xi}$ \code{...}
 }
+\seealso{
+Other Analyse modele glm_logit.: 
+\code{\link{conf_mat}()},
+\code{\link{ft_conf_tab}()}
+}
+\concept{Analyse modele glm_logit.}
