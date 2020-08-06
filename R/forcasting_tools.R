@@ -9,6 +9,7 @@
 #' @param new_data Put data frame "test".
 #' @param type Default at "response" or see [predict.glm()], the type of prediction required.
 #' @importFrom  broom augment
+#' @family predicting functions
 #' @examples
 #' library(broom)
 #' fit <- glm(Ozone~., data= airquality)
@@ -23,6 +24,28 @@ predict_broom <- function(modele, data, new_data, type="response"){
 
   broom::augment(modele, data, newdata=new_data, type.predict=type)
 
+}
+
+
+# regression penalisee ----
+# prediction avec broom ----
+#' @export
+#' @title Generalised predict function for [glmnet()] models.
+#' @description Put data frame (train or test).
+#' @param modele glmnet objects.
+#' @param data_df Data, class "data.frame".
+#' @param y_name The variable cible (Y) in characters.
+#' @param x_name List of explanatory variables (list of characters).
+#' @importFrom  stats model.matrix as.formula predict
+#' @family predicting functions
+
+pred_glm_net <- function(data_df, y_name, x_name, modele){
+ mod_formula <- sprintf(paste0(y_name,"~ %s"), paste0(x_name, collapse = "+"))
+
+ x <- model.matrix(as.formula(mod_formula), data_df)[,-1]
+
+ pred <- predict(modele, x, type="response")
+ pred
 }
 
 

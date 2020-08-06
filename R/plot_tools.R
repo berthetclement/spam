@@ -1,3 +1,5 @@
+# glm ----
+
 # declaration variables globales
 globalVariables(c("count", "prop"))
 

@@ -25,4 +25,8 @@ predict_broom(modele= fit, data= airquality, new_data= airquality[2:50,], type= 
 }
 \seealso{
 \code{\link[=augment]{augment()}} for initial function.
+
+Other predicting functions: 
+\code{\link{pred_glm_net}()}
 }
+\concept{predicting functions}

@@ -25,5 +25,9 @@ glm_logit(iris, "Species", nom_col)
 }
 \seealso{
 \code{\link[=glm]{glm()}} for initial function
+
+Other modeling functions: 
+\code{\link{cv_glm_net}()},
+\code{\link{glm_net}()}
 }
 \concept{modeling functions}

@@ -124,3 +124,60 @@ ft_conf_tab <- function(df_conf_mat){
         flextable(round(df_conf_mat,3))
 }
 
+
+# glm net ----
+
+#' @export
+#' @title Cross-validation for glmnet
+#' @description Does k-fold cross-validation for glmnet, produces a plot \code{...}
+#' By default, nfolds = 10
+#' @param data_df Model data, class "data.frame".
+#' @param y_name The variable cible (Y) in characters.
+#' @param x_name List of explanatory variables (list of characters).
+#' @param alpha_ 0 for Ridge and 1 for Lasso.
+#' @param ... Add arguments from [cv.glmnet()].
+#' @importFrom glmnet cv.glmnet
+#' @importFrom  stats model.matrix as.formula
+#' @family modeling functions
+#' @seealso [cv.glmnet()] for initial function
+
+cv_glm_net <- function(data_df, y_name, x_name, alpha_, ...) {
+        # x matrix pour glmnet
+        mod_formula <- sprintf(paste0(y_name,"~ %s"), paste0(x_name, collapse = "+"))
+
+        x <- model.matrix(as.formula(mod_formula), data_df)[,-1]
+
+        cv_modele <- cv.glmnet(x, data_df$spam, alpha = alpha_, type.measure = "class", family="binomial")
+
+        cv_modele
+}
+
+
+
+#' @export
+#' @title fit a GLM with Lasso or Ridge or elasticnet regularization
+#' @description Fit a generalized linear model via penalized maximum likelihood \code{...}
+#'
+#' @param data_df Model data, class "data.frame".
+#' @param y_name The variable cible (Y) in characters.
+#' @param x_name List of explanatory variables (list of characters).
+#' @param alpha_ 0 for Ridge and 1 for Lasso.
+#' @param lambda_cv Lambda min from [cv_glm_net()]
+#' @param ... Add arguments from [glmnet()].
+#' @importFrom glmnet glmnet
+#' @importFrom  stats model.matrix as.formula
+#' @family modeling functions
+#' @seealso [glmnet()] for initial function
+
+glm_net <- function(data_df, y_name, x_name, alpha_, lambda_cv, ...){
+
+        mod_formula <- sprintf(paste0(y_name,"~ %s"), paste0(x_name, collapse = "+"))
+
+        x <- model.matrix(as.formula(mod_formula), data_df)[,-1]
+
+        fit_lasso <-glmnet(x, data_df$spam, alpha = alpha_, lambda = lambda_cv, family="binomial")
+        fit_lasso
+
+}
+
+
