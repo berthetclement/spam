@@ -181,3 +181,72 @@ glm_net <- function(data_df, y_name, x_name, alpha_, lambda_cv, ...){
 }
 
 
+# rpart ----
+
+#' @export
+#' @title Recursive Partitioning and Regression Trees
+#' @description Fit a rpart model then prune.rpart {rpart} model.
+#'
+#' @param data_df Model data, class "data.frame".
+#' @param y_name The variable cible (Y) in characters.
+#' @param x_name List of explanatory variables (list of characters).
+#' @param ... Add arguments from [rpart()].
+#' @importFrom rpart rpart rpart.control prune
+#' @importFrom  stats model.matrix as.formula
+#' @family modeling functions
+#' @seealso [rpart()] and [prune()]for initial function
+
+tree_rpart <- function(data_df, y_name, x_name, ...){
+        mod_formula <- sprintf(paste0(y_name, "~ %s"), paste0(x_name, collapse = "+"))
+
+        fit <- rpart(as.formula(mod_formula), data_df,
+                     control=rpart.control(minsplit=5,cp=0))
+        # 1-se
+        se = min(fit$cptable[, "xerror"]) + (1*fit$cptable[ which.min(fit$cptable[, "xerror"]), "xstd"])
+
+        cp_opti <- fit$cptable[fit$cptable[,"xerror"]<se , "CP"][1]
+
+        # prune
+        fit_prune = rpart::prune(fit, cp=cp_opti)
+
+        fit_prune
+
+}
+
+
+#' @export
+#' @title Matrice de confusion pour rpart.
+#' @description Sensibilite, specificite \code{...}
+#' @param var_response Vecteur de la variable reponse sur le test (type factor pour [table()]).
+#' @param class_estime Vecteur (factor) des Y estimés sur test.
+#' @param nb_individus Longueur du data frame test (nombre reel).
+#' @return Data frame.
+
+conf_mat_rpart <- function(var_response, class_estime, nb_individus){
+
+        confusion.mat = table(var_response, class_estime)
+
+        fauxneg = confusion.mat[2,1]
+        fauxpos = confusion.mat[1,2]
+        vraisneg = confusion.mat[1,1]
+        vraispos = confusion.mat[2,2]
+        txerr = (fauxneg+fauxpos) / nb_individus
+        sensibilite <- vraispos / (vraispos + fauxneg)
+        precision <- vraispos / (vraispos + fauxpos)
+        specificite <- vraisneg / (vraisneg + fauxpos)
+
+        df <- data.frame(fauxneg,
+                         fauxpos ,
+                         vraisneg ,
+                         vraispos ,
+                         txerr ,
+                         sensibilite ,
+                         precision ,
+                         specificite
+        )
+        df
+}
+
+
+
+

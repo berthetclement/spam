@@ -27,6 +27,7 @@ Fit a generalized linear model via penalized maximum likelihood \code{...}
 
 Other modeling functions: 
 \code{\link{cv_glm_net}()},
-\code{\link{glm_logit}()}
+\code{\link{glm_logit}()},
+\code{\link{tree_rpart}()}
 }
 \concept{modeling functions}

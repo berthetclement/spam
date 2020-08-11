@@ -1,5 +1,5 @@
 
-# prediction avec broom ----
+# prediction glm ----
 #' @export
 #' @title Generalised predict function
 #' @description Generic function of prediction with function [augment()] of package {broom}.
@@ -27,8 +27,8 @@ predict_broom <- function(modele, data, new_data, type="response"){
 }
 
 
-# regression penalisee ----
-# prediction avec broom ----
+# prediction glmnet ----
+
 #' @export
 #' @title Generalised predict function for [glmnet()] models.
 #' @description Put data frame (train or test).
@@ -45,6 +45,23 @@ pred_glm_net <- function(data_df, y_name, x_name, modele){
  x <- model.matrix(as.formula(mod_formula), data_df)[,-1]
 
  pred <- predict(modele, x, type="response")
+ pred
+}
+
+
+# prediction rpart ----
+
+#' @export
+#' @title Vector of predictions for [rpart()] models.
+#' @description Put data frame (train or test).
+#' @param data_df Data, class "data.frame".
+#' @param modele rpart objects.
+#' @importFrom  stats predict
+#' @family predicting functions
+
+pred_rpart <- function(data_df, modele){
+
+ pred <- predict(modele, data_df, type="class")
  pred
 }
 

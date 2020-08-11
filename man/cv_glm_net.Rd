@@ -26,6 +26,7 @@ By default, nfolds = 10
 
 Other modeling functions: 
 \code{\link{glm_logit}()},
-\code{\link{glm_net}()}
+\code{\link{glm_net}()},
+\code{\link{tree_rpart}()}
 }
 \concept{modeling functions}

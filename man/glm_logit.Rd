@@ -28,6 +28,7 @@ glm_logit(iris, "Species", nom_col)
 
 Other modeling functions: 
 \code{\link{cv_glm_net}()},
-\code{\link{glm_net}()}
+\code{\link{glm_net}()},
+\code{\link{tree_rpart}()}
 }
 \concept{modeling functions}

@@ -1,7 +1,7 @@
 # glm ----
 
 # declaration variables globales
-globalVariables(c("count", "prop"))
+globalVariables(c("count", "prop", "x", "xend", "y", "yend"))
 
 #' @export
 #' @title Analyse descriptive avec geom_tile().
@@ -46,7 +46,6 @@ gg_tile <- function(tidy_df,
 
 }
 
-# graph bar ----
 
 #' @export
 #' @title Proportion Email/Spam.
@@ -89,8 +88,6 @@ gg_bar <- function(df, y_plot, labs_capt, labs_title){
 
 }
 
-
-# graph bar capital letters ----
 
 #' @export
 #' @title Average bar plot by group Email/Spam.
@@ -138,9 +135,6 @@ gg_bar_group <- function(tidy_df,
 }
 
 
-
-# plot des pi ----
-
 #' @export
 #' @title Distribution des  \code{$p_{xi}$}
 #' @description A utiliser apres la fonction [analyse_modele()].
@@ -182,8 +176,6 @@ gg_pi <- function(df, pi, fill_var,labs_capt, labs_title){
 #' @family graphiques modele glm_logit
 #' @return ggplot/ggroc/theme_minimal/theme/labs.
 
-
-# courbe roc ----
 gg_roc <- function(roc, labs_capt, labs_title){
   ggroc(roc,
         alpha = 0.5, colour = "red", size = 2,
@@ -203,3 +195,37 @@ gg_roc <- function(roc, labs_capt, labs_title){
          title = labs_title
     )
 }
+
+
+# rpart ----
+
+#' @export
+#' @title Dendrogram with ggplot2
+#' @description Plot rpart tree model with {ggplot2} and {ggdendro}.
+#' @param modele Rpart object type.
+#' @param labs_capt  Character label.
+#' @param labs_title Character label.
+#' @importFrom ggdendro dendro_data segment label leaf_label theme_dendro
+#' @return ggplot/geom_segment/geom_text/theme_dendro/theme/labs.
+
+gg_rpart <- function(modele, labs_title, labs_capt){
+
+  modele <- dendro_data(modele)
+
+  ggplot(segment(modele))+
+    geom_segment(aes(x=x, y=y, xend=xend, yend=yend),
+                 colour="lightblue") +
+    geom_text(data=label(modele),
+              aes(x=x, y=y, label=label), vjust=-0.5, size=4) +
+    geom_text(data=leaf_label(modele),
+              aes(x=x, y=y, label=label), vjust=0.5, size=3) +
+    theme_dendro()+
+    theme(
+      plot.title = element_text(face = "bold", hjust = 0.5, size=12),
+      plot.caption = element_text(face = "bold", size=8)
+    )+
+    labs(caption = labs_capt,
+         title = labs_title
+    )
+}
+
