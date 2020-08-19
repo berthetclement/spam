@@ -66,7 +66,29 @@ pred_rpart <- function(data_df, modele){
 }
 
 
+# prediction KERAS ----
 
+#' @export
+#' @title Vector of predictions for keras [fit()] models.
+#' @description Put data frame (train or test).
+#' @param keras_model Keras model object.
+#' @param test Data frame.
+#' @param name_response Name of response variable.
+#' @importFrom  stats model.matrix as.formula predict
+#' @importFrom magrittr "%>%"
+#' @family predicting functions
+
+pred_keras <- function(keras_model, test, name_response){
+
+  nom_col <- setdiff(names(test), name_response)
+  mod_formula <- sprintf(paste0(name_response,"~ %s"), paste0(nom_col, collapse = "+"))
+  x_test <- model.matrix(as.formula(mod_formula), test)[,-1]
+
+  pred <- keras_model %>%
+    predict(x_test)
+
+  pred
+}
 
 
 

@@ -20,6 +20,7 @@ Put data frame (train or test).
 }
 \seealso{
 Other predicting functions: 
+\code{\link{pred_keras}()},
 \code{\link{pred_rpart}()},
 \code{\link{predict_broom}()}
 }

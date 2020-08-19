@@ -25,6 +25,8 @@ By default, nfolds = 10
 \code{\link[=cv.glmnet]{cv.glmnet()}} for initial function
 
 Other modeling functions: 
+\code{\link{def_model_keras}()},
+\code{\link{fit_keras}()},
 \code{\link{glm_logit}()},
 \code{\link{glm_net}()},
 \code{\link{tree_rpart}()}

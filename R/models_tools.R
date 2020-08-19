@@ -1,4 +1,5 @@
 
+
 # construire un train/test a partir d'un data frame ----
 
 #' @export
@@ -245,6 +246,82 @@ conf_mat_rpart <- function(var_response, class_estime, nb_individus){
                          specificite
         )
         df
+}
+
+
+# neurones KERAS ----
+
+#' @export
+#' @title Define neuronal model with Keras
+#' @description Type of model is sequential.
+#'
+#' @param input_neuro Number to define "input shape".
+#' @param nb__neuro_cc Number of neurons of blind layer.
+#' @param fct_activ Name of activation function.
+#' @param name_loss Name of loss function.
+#' @param name_optimizer Name of optimizer parameter.
+#' @param name_metrics Name of metrics.
+#' @importFrom keras keras_model_sequential compile layer_dense
+#' @importFrom magrittr "%>%"
+#' @family modeling functions
+#' @seealso [keras_model_sequential()], [compile.keras.engine.training.Model()].
+
+# neurone statique a 1 cc
+
+def_model_keras <- function(input_neuro, nb__neuro_cc, fct_activ,
+                            name_loss, name_optimizer, name_metrics){
+
+
+        fit_k <- keras_model_sequential() %>%
+                layer_dense(units=nb__neuro_cc,input_shape=c(input_neuro),activation=fct_activ) %>%
+                layer_dense(units = 1, activation = fct_activ)
+
+        # Compiling is done with the compile function:
+
+        fit_k %>%
+                compile(
+                        loss = name_loss,
+                        optimizer = name_optimizer,
+                        metrics = name_metrics
+                )
+
+        fit_k
+
+}
+
+
+#' @export
+#' @title Execute neuronal model with Keras
+#' @description Type of model is sequential.
+#'
+#' @param keras_model Keras model object to fit.
+#' @param train Data frame.
+#' @param name_response Name of response variable.
+#' @param nb_epochs Number of epochs.
+#' @param param_batch_size Number of samples per gradient update.
+#' @importFrom keras fit
+#' @importFrom magrittr "%>%"
+#' @importFrom stats model.matrix as.formula
+#' @family modeling functions
+#' @seealso [fit()].
+
+# execution modele
+
+fit_keras <- function(keras_model, train, name_response, nb_epochs, param_batch_size){
+
+        nom_col <- setdiff(names(train), name_response)
+        mod_formula <- sprintf(paste0(name_response,"~ %s"), paste0(nom_col, collapse = "+"))
+
+        x_train <- model.matrix(as.formula(mod_formula), train)[,-1]
+        # Outcome variable
+        y_train <- as.numeric(levels(train$spam))[train$spam]
+
+        keras_model %>%
+                fit(
+                        x = x_train, y = y_train,
+                        epochs=nb_epochs,
+                        batch_size=param_batch_size
+                )
 }
 
 

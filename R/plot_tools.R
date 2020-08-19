@@ -229,3 +229,38 @@ gg_rpart <- function(modele, labs_title, labs_capt){
     )
 }
 
+
+
+# KERAS ----
+
+#' @export
+#' @title Plot keras training model
+#' @description You can see, evolution of loss and accuracy.
+#' @param keras_histo keras_training_history object class.
+#' @param labs_capt  Character label.
+#' @param labs_title Character label.
+#' @return ggplot/theme/labs.
+
+  # plot keras training modeling (epochs/loss/accuracy)
+
+gg_keras <- function(keras_histo, labs_capt, labs_title){
+  plot(keras_histo)+
+    theme_minimal()+
+    theme(
+      plot.title = element_text(face = "bold", hjust = 0.5, size=12, vjust = 2),
+      axis.text.x = element_text(vjust=1, angle=0, hjust = 1, size = 8, colour = "gray40"),
+      axis.title.x=element_text(size=12),
+      axis.title.y=element_text(size=12)
+    )+
+    labs( y = element_blank(),
+          caption = labs_capt,
+          title = labs_title
+    )
+}
+
+
+
+
+
+
+

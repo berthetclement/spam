@@ -23,6 +23,8 @@ Fit a rpart model then prune.rpart {rpart} model.
 
 Other modeling functions: 
 \code{\link{cv_glm_net}()},
+\code{\link{def_model_keras}()},
+\code{\link{fit_keras}()},
 \code{\link{glm_logit}()},
 \code{\link{glm_net}()}
 }
