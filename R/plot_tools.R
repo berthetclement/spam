@@ -31,13 +31,13 @@ gg_tile <- function(tidy_df,
   coord_equal()+
   theme_minimal() +
   theme(
-   plot.title = element_text(face = "bold", hjust = 0.5, size=8, vjust = 40),
+   plot.title = element_text(face = "bold", hjust = 0.5, size=12, vjust = 40),
    legend.position = "bottom",
-   legend.title=element_text(face = "bold", hjust = 0.5, size=8),
+   legend.title=element_text(face = "bold", hjust = 0.5, size=10),
    legend.text=element_text(size=8,vjust =1,  hjust = 1),
-   axis.text.x = element_text(vjust=1, angle=90, hjust = 1, size = 8, colour = "gray40"),
-   axis.title.x=element_text(size=8),
-   axis.title.y=element_text(size=8)
+   axis.text.x = element_text(vjust=1, angle=90, hjust = 1, size = 10, colour = "gray40"),
+   axis.title.x=element_text(size=10),
+   axis.title.y=element_text(size=10)
   )+
   labs(x = labs_x, y = labs_y,
        caption = labs_capt,
@@ -124,7 +124,7 @@ gg_bar_group <- function(tidy_df,
       plot.title = element_text(face = "bold", hjust = 0.5, size=12),
       legend.title=element_blank(), #element_text(face = "bold", hjust = 0.5, size=8),
       legend.text=element_text(size=8,vjust =1,  hjust = 1),
-      axis.text.x = element_text(vjust=1, angle=0, hjust = 1, size = 8, colour = "gray40"),
+      axis.text.x = element_text(vjust=1, angle=0, hjust = 0.5, size = 10, colour = "gray40"),
       axis.title.x=element_text(size=8),
       axis.title.y=element_text(size=8)
     )+
@@ -183,7 +183,7 @@ gg_roc <- function(roc, labs_capt, labs_title){
     theme_minimal() +
     theme(
       plot.title = element_text(face = "bold", hjust = 0.5, size=12),
-      plot.caption = element_text(face = "bold", size=8),
+      plot.caption = element_text(face = "bold", size=10),
       legend.title=element_blank(),
       legend.text=element_text(size=8,vjust =1,  hjust = 1),
       axis.text.x = element_text(vjust=1, angle=0, hjust = 1, size = 8, colour = "gray40"),

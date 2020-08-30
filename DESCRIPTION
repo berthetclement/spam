@@ -1,14 +1,15 @@
 Package: spam
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Model analisys on data spam
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Clement Berthet
+Maintainer: The package maintainer <clement.berthet013@gmail.com>
+Description: Classification models.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports: ggplot2, broom, utils, flextable, pROC, glmnet, rpart, ggdendro, keras, magrittr
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
+
+
