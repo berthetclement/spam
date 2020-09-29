@@ -45,7 +45,7 @@ glm_logit <- function(data_df, y_name, x_name, ...) {
  mod_formula <- sprintf(paste0(y_name, "~ %s"), paste0(x_name, collapse = "+"))
 
  reg <- glm(as.formula(mod_formula),
-            family = binomial(link="logit"), data=data_df)
+            family = binomial(link="logit"), data=data_df, ...)
  reg
 }
 
@@ -148,7 +148,8 @@ cv_glm_net <- function(data_df, y_name, x_name, alpha_, ...) {
 
         x <- model.matrix(as.formula(mod_formula), data_df)[,-1]
 
-        cv_modele <- cv.glmnet(x, data_df$spam, alpha = alpha_, type.measure = "class", family="binomial")
+        cv_modele <- cv.glmnet(x, data_df$spam, alpha = alpha_, type.measure = "class",
+                               family="binomial", ...)
 
         cv_modele
 }
@@ -176,7 +177,8 @@ glm_net <- function(data_df, y_name, x_name, alpha_, lambda_cv, ...){
 
         x <- model.matrix(as.formula(mod_formula), data_df)[,-1]
 
-        fit_lasso <-glmnet(x, data_df$spam, alpha = alpha_, lambda = lambda_cv, family="binomial")
+        fit_lasso <-glmnet(x, data_df$spam, alpha = alpha_, lambda = lambda_cv,
+                           family="binomial", ...)
         fit_lasso
 
 }
@@ -201,7 +203,7 @@ tree_rpart <- function(data_df, y_name, x_name, ...){
         mod_formula <- sprintf(paste0(y_name, "~ %s"), paste0(x_name, collapse = "+"))
 
         fit <- rpart(as.formula(mod_formula), data_df,
-                     control=rpart.control(minsplit=5,cp=0))
+                     control=rpart.control(minsplit=5,cp=0), ...)
         # 1-se
         se = min(fit$cptable[, "xerror"]) + (1*fit$cptable[ which.min(fit$cptable[, "xerror"]), "xstd"])
 
